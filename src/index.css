@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0b0f14;
+  --surface: #131a22;
+  --surface-2: #1b242e;
+  --line: #253040;
+  --ink: #e8eef5;
+  --muted: #8a98a8;
+  --accent: #b8f24d;
+  --accent-ink: #0b0f14;
+  --ok: #4ade80;
+  --bad: #f87171;
+}
+
+[data-tema="claro"] {
+  --bg: #f6f7f3;
+  --surface: #ffffff;
+  --surface-2: #eef1e8;
+  --line: #d8ded0;
+  --ink: #16201a;
+  --muted: #5c6a5e;
+  --accent: #4f8f00;
+  --accent-ink: #ffffff;
+  --ok: #15803d;
+  --bad: #b91c1c;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+  --font-display: "Sora Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  overscroll-behavior-y: none;
+  min-height: 100dvh;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+@utility card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+@utility safe-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+}
