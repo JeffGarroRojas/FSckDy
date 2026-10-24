@@ -1,6 +1,7 @@
 import type { Unidad } from "../types";
+import { UNIDADES_FS } from "./unidades-fs";
 
-export const UNIDADES: Unidad[] = [
+const DAM: Unidad[] = [
   {
     id: "u-entorno",
     materia: "entorno-web",
@@ -398,4 +399,9 @@ export const UNIDADES: Unidad[] = [
   },
 ];
 
+export const UNIDADES: Unidad[] = [...DAM, ...UNIDADES_FS];
+
 export const unidadPorId = (id: string) => UNIDADES.find((u) => u.id === id);
+
+export const unidadesPorPrograma = (programa: "dam" | "fullstack") =>
+  UNIDADES.filter((u) => (u.programa ?? "dam") === programa);

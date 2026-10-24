@@ -1,32 +1,67 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UNIDADES } from "../../data/unidades";
+import { unidadesPorPrograma } from "../../data/unidades";
 import { PREGUNTAS } from "../../data/preguntas";
 import { estadoUnidad, resumenRuta, useApp } from "../../lib/store";
 
+type Programa = "dam" | "fullstack";
+
 const etiqueta = {
-  nueva: { texto: "Nueva", color: "var(--muted)" },
-  leida: { texto: "Leída", color: "var(--accent)" },
-  "en-curso": { texto: "En curso", color: "var(--accent)" },
-  dominada: { texto: "Dominada", color: "var(--ok)" },
+  nueva: { texto: "Nueva", color: "var(--muted)", icono: "○" },
+  leida: { texto: "Leída", color: "var(--accent)", icono: "▶" },
+  "en-curso": { texto: "En curso", color: "var(--accent)", icono: "▶" },
+  dominada: { texto: "Dominada", color: "var(--ok)", icono: "✓" },
 } as const;
+
+const programas: { id: Programa; nombre: string; sub: string }[] = [
+  { id: "dam", nombre: "Prueba DAM", sub: "Examen 3015" },
+  { id: "fullstack", nombre: "Full stack", sub: "Del bit a producción" },
+];
 
 export default function Ruta() {
   const progreso = useApp((s) => s.unidades);
   const tarjetas = useApp((s) => s.tarjetas);
-  const { dominadas, total } = resumenRuta(progreso);
+  const [programa, setPrograma] = useState<Programa>(
+    (localStorage.getItem("fsckdy:programa") as Programa) || "dam",
+  );
+
+  const cambiar = (p: Programa) => {
+    localStorage.setItem("fsckdy:programa", p);
+    setPrograma(p);
+  };
+
+  const unidades = unidadesPorPrograma(programa);
+  const { dominadas, total } = resumenRuta(progreso, programa);
   const pct = Math.round((dominadas / total) * 100);
 
-  const porMateria = UNIDADES.reduce<Record<string, typeof UNIDADES>>((acc, u) => {
+  const porMateria = unidades.reduce<Record<string, typeof unidades>>((acc, u) => {
     (acc[u.materiaNombre] ??= []).push(u);
     return acc;
   }, {});
 
   const proxima =
-    UNIDADES.find((u) => progreso[u.id]?.leida && !progreso[u.id]?.dominada) ??
-    UNIDADES.find((u) => !progreso[u.id]?.leida);
+    unidades.find((u) => progreso[u.id]?.leida && !progreso[u.id]?.dominada) ??
+    unidades.find((u) => !progreso[u.id]?.leida);
 
   return (
     <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-2 rounded-xl border border-line bg-surface p-1">
+        {programas.map((p) => (
+          <button
+            key={p.id}
+            onClick={() => cambiar(p.id)}
+            className={`rounded-lg px-3 py-2 text-left transition-colors ${
+              programa === p.id ? "bg-surface-2" : ""
+            }`}
+          >
+            <span className={`block text-sm font-semibold ${programa === p.id ? "text-accent" : "text-muted"}`}>
+              {p.nombre}
+            </span>
+            <span className="block text-[10px] text-muted">{p.sub}</span>
+          </button>
+        ))}
+      </div>
+
       <section className="card p-5">
         <div className="flex items-center gap-4">
           <div className="relative size-16 shrink-0">
@@ -55,38 +90,31 @@ export default function Ruta() {
         )}
       </section>
 
-      {Object.entries(porMateria).map(([materia, unidades]) => (
+      {Object.entries(porMateria).map(([materia, lista]) => (
         <section key={materia} className="space-y-2">
           <h2 className="px-1 text-xs font-semibold tracking-wider text-muted uppercase">{materia}</h2>
-          {unidades.map((u) => {
+          {lista.map((u) => {
             const estado = estadoUnidad(u.id, progreso);
             const p = progreso[u.id];
-            const preguntas = PREGUNTAS.filter((q) => u.preguntas.includes(q.id)).length;
+            const cuantas = PREGUNTAS.filter((q) => u.preguntas.includes(q.id)).length;
             return (
-              <Link
-                key={u.id}
-                to={`/unidad/${u.id}`}
-                className="card flex items-center gap-3 p-4 active:scale-[0.99]"
-              >
+              <Link key={u.id} to={`/unidad/${u.id}`} className="card flex items-center gap-3 p-4 active:scale-[0.99]">
                 <span
                   className="grid size-9 shrink-0 place-items-center rounded-full border text-xs font-bold"
-                  style={{
-                    borderColor: etiqueta[estado].color,
-                    color: etiqueta[estado].color,
-                  }}
+                  style={{ borderColor: etiqueta[estado].color, color: etiqueta[estado].color }}
                   aria-hidden
                 >
-                  {estado === "dominada" ? "✓" : estado === "nueva" ? "○" : "▶"}
+                  {etiqueta[estado].icono}
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-sm font-medium leading-snug">{u.titulo}</span>
-                  <span className="mt-0.5 flex items-center gap-2 text-[11px] text-muted">
+                  <span className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[11px] text-muted">
                     <span style={{ color: etiqueta[estado].color }} className="font-semibold uppercase">
                       {etiqueta[estado].texto}
                     </span>
                     <span aria-hidden>·</span>
                     <span>
-                      Lección + {preguntas} preguntas
+                      Lección + {cuantas} preguntas
                       {p?.mejor ? ` · mejor ${Math.round(p.mejor * 100)}%` : ""}
                     </span>
                   </span>
@@ -98,10 +126,10 @@ export default function Ruta() {
       ))}
 
       <section className="card p-4">
-        <h2 className="text-sm font-semibold">¿Ya leíste todo?</h2>
+        <h2 className="text-sm font-semibold">Repaso mezclado</h2>
         <p className="mt-1 text-xs text-muted">
-          El repaso mezcla todas las materias con repetición espaciada. {Object.keys(tarjetas).length} de{" "}
-          {PREGUNTAS.length} tarjetas vistas.
+          Repetición espaciada con todo lo que ya viste, sin importar el programa.{" "}
+          {Object.keys(tarjetas).length} de {PREGUNTAS.length} tarjetas vistas.
         </p>
         <Link to="/repaso" className="mt-3 block rounded-xl border border-line py-2.5 text-center text-sm text-ink">
           Ir a repaso

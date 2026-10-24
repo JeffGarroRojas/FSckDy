@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import type { Intento, Pregunta, ProgresoUnidad, Tarjeta } from "../types";
 import { PREGUNTAS } from "../data/preguntas";
-import { UNIDADES, unidadPorId } from "../data/unidades";
+import { unidadPorId, unidadesPorPrograma } from "../data/unidades";
 import { db, inicioDelDia } from "./db";
 import { calidadPorRespuesta, estaVencida, nuevaTarjeta, sm2 } from "./sm2";
 
@@ -160,8 +160,9 @@ export function progresoPorMateria(intentos: Intento[]) {
   return mapa;
 }
 
-export function resumenRuta(progreso: Record<string, ProgresoUnidad>) {
-  const dominadas = UNIDADES.filter((u) => progreso[u.id]?.dominada).length;
-  const leidas = UNIDADES.filter((u) => progreso[u.id]?.leida).length;
-  return { total: UNIDADES.length, dominadas, leidas };
+export function resumenRuta(progreso: Record<string, ProgresoUnidad>, programa: "dam" | "fullstack") {
+  const lista = unidadesPorPrograma(programa);
+  const dominadas = lista.filter((u) => progreso[u.id]?.dominada).length;
+  const leidas = lista.filter((u) => progreso[u.id]?.leida).length;
+  return { total: lista.length, dominadas, leidas };
 }

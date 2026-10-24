@@ -20,6 +20,7 @@ export type Bloque =
 
 export interface Unidad {
   id: string;
+  programa?: "dam" | "fullstack";
   materia: string;
   materiaNombre: string;
   titulo: string;

@@ -6,7 +6,12 @@ Repaso espaciado para la prueba **DAM 2026** (código 3015, Costa Rica). Pensada
 
 ## Qué hace
 
-- **Ruta de 17 unidades**: teoría corta y quiz de 5 preguntas por unidad. Se domina con 80%.
+Dos programas en una sola app:
+
+- **Prueba DAM** — 17 unidades según la tabla oficial 3015 (MEP).
+- **Full stack** — 14 unidades, del bit a producción, derivadas de cursos abiertos ([atribución](docs/ATRIBUCION.md)).
+
+En ambos: teoría corta y quiz de 5 preguntas por unidad. Se domina con 80%.
 - **Repaso** de 10 tarjetas priorizando lo que ya toca (algoritmo SM-2).
 - **Feedback inmediato** con explicación de cada respuesta.
 - **Progreso**: racha de días, precisión, mapa de 30 días y cobertura por materia.
@@ -16,7 +21,9 @@ Repaso espaciado para la prueba **DAM 2026** (código 3015, Costa Rica). Pensada
 
 ## Contenido
 
-85 preguntas distribuidas según la tabla de especificaciones oficial de DAM 2026:
+155 preguntas en total: 85 del examen DAM 2026 y 70 de fundamentos de full stack.
+
+### Programa DAM (85)
 
 | Materia | Ítems |
 |---|---|
@@ -33,6 +40,25 @@ Repaso espaciado para la prueba **DAM 2026** (código 3015, Costa Rica). Pensada
 | Phishing | 5 |
 | Ciudadano digital | 5 |
 | IA y agentes | 10 |
+
+### Programa Full stack (70)
+
+| Unidad | Preguntas |
+|---|---|
+| Computación | 5 |
+| Algoritmos | 5 |
+| HTML semántico | 5 |
+| CSS moderno | 5 |
+| JavaScript | 5 |
+| HTTP | 5 |
+| Backend con Node | 5 |
+| SQL y datos | 5 |
+| Git | 5 |
+| Testing | 5 |
+| Seguridad web | 5 |
+| DevOps | 5 |
+| Arquitectura | 5 |
+| Rendimiento web | 5 |
 
 ## Stack
 
@@ -72,8 +98,10 @@ src/
 │   ├── sm2.ts            # algoritmo de repaso espaciado
 │   ├── db.ts             # Dexie + cálculo de racha
 │   └── store.ts          # estado global (Zustand)
-├── data/unidades.ts      # 17 unidades con su lección
-└── data/preguntas.ts     # 85 preguntas
+├── data/unidades.ts      # 17 unidades DAM
+├── data/unidades-fs.ts   # 14 unidades full stack
+├── data/preguntas.ts     # 85 preguntas DAM
+└── data/preguntas-fs.ts  # 70 preguntas full stack
 ```
 
 ## Roadmap

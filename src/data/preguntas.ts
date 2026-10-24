@@ -1,4 +1,5 @@
 import type { Pregunta } from "../types";
+import { PREGUNTAS_FS } from "./preguntas-fs";
 
 const p = (
   id: string,
@@ -12,7 +13,7 @@ const p = (
   dificultad: 1 | 2 | 3,
 ): Pregunta => ({ id, materia, materiaNombre, tema, enunciado, opciones, respuesta, explicacion, dificultad });
 
-export const PREGUNTAS: Pregunta[] = [
+const DAM: Pregunta[] = [
   // ─── Entorno web (3) ───
   p("web-001", "entorno-web", "Entorno web", "industria-4.0",
     "¿Qué caracteriza a la Industria 4.0?",
@@ -660,6 +661,8 @@ export const PREGUNTAS: Pregunta[] = [
      "Medir el consumo eléctrico del servidor"],
     1, "Un solo protocolo en lugar de un conector distinto por cada modelo y cada herramienta.", 3),
 ];
+
+export const PREGUNTAS: Pregunta[] = [...DAM, ...PREGUNTAS_FS];
 
 export const MATERIAS = Array.from(
   PREGUNTAS.reduce((m, q) => {

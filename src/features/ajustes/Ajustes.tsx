@@ -88,11 +88,20 @@ export default function Ajustes() {
       <section className="card space-y-1 p-4 text-xs text-muted">
         <h3 className="text-sm font-semibold text-ink">Acerca de</h3>
         <p>FSckDy · preparación DAM 2026 (código 3015).</p>
-        <p>17 unidades · 85 preguntas basadas en la tabla oficial DAM 2026.</p>
+        <p>31 unidades · 155 preguntas.</p>
+        <p>Programa Prueba DAM: 17 unidades según la tabla oficial 3015.</p>
+        <p>Programa Full stack: 14 unidades derivadas de cursos abiertos.</p>
         <p>Cada unidad: lección de teoría y quiz de 5 preguntas (80% para dominar).</p>
         <p>Repaso espaciado SM-2 · funciona sin conexión.</p>
         {instalable && <p className="text-accent">Puedes instalarla desde el menú del navegador.</p>}
-        <p className="pt-2">v0.1.0</p>
+        <p>
+          Fuentes y licencias en{" "}
+          <a className="text-accent underline" href="https://github.com/JeffGarroRojas/FSckDy/blob/main/docs/ATRIBUCION.md" target="_blank" rel="noreferrer">
+            docs/ATRIBUCION.md
+          </a>
+          .
+        </p>
+        <p className="pt-2">v0.3.0</p>
       </section>
     </div>
   );
