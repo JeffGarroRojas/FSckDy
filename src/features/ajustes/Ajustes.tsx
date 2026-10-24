@@ -88,7 +88,8 @@ export default function Ajustes() {
       <section className="card space-y-1 p-4 text-xs text-muted">
         <h3 className="text-sm font-semibold text-ink">Acerca de</h3>
         <p>FSckDy · preparación DAM 2026 (código 3015).</p>
-        <p>50 preguntas basadas en la tabla de especificaciones oficial.</p>
+        <p>17 unidades · 85 preguntas basadas en la tabla oficial DAM 2026.</p>
+        <p>Cada unidad: lección de teoría y quiz de 5 preguntas (80% para dominar).</p>
         <p>Repaso espaciado SM-2 · funciona sin conexión.</p>
         {instalable && <p className="text-accent">Puedes instalarla desde el menú del navegador.</p>}
         <p className="pt-2">v0.1.0</p>

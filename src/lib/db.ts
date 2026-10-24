@@ -1,16 +1,18 @@
 import Dexie, { type Table } from "dexie";
-import type { Intento, Tarjeta } from "../types";
+import type { Intento, ProgresoUnidad, Tarjeta } from "../types";
 import { DIA } from "./sm2";
 
 class FsckDyDB extends Dexie {
   tarjetas!: Table<Tarjeta, string>;
   intentos!: Table<Intento, number>;
+  unidades!: Table<ProgresoUnidad, string>;
 
   constructor() {
     super("fsckdy");
-    this.version(1).stores({
+    this.version(2).stores({
       tarjetas: "preguntaId, due",
       intentos: "++id, preguntaId, materia, ts",
+      unidades: "id, dominada",
     });
   }
 }

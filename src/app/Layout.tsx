@@ -3,9 +3,10 @@ import { calcularRacha } from "../lib/db";
 import { useApp } from "../lib/store";
 
 const tabs = [
-  { to: "/", label: "Hoy", icon: "◉" },
-  { to: "/progreso", label: "Progreso", icon: "▤" },
+  { to: "/", label: "Ruta", icon: "◉" },
+  { to: "/repaso", label: "Repaso", icon: "↻" },
   { to: "/banco", label: "Banco", icon: "▦" },
+  { to: "/progreso", label: "Progreso", icon: "▤" },
   { to: "/ajustes", label: "Ajustes", icon: "⚙" },
 ];
 
@@ -35,7 +36,7 @@ export default function Layout() {
       </main>
 
       <nav className="safe-bottom fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-line bg-surface/95 backdrop-blur">
-        <ul className="grid grid-cols-4">
+        <ul className="grid grid-cols-5">
           {tabs.map((t) => (
             <li key={t.to}>
               <NavLink

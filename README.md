@@ -6,7 +6,8 @@ Repaso espaciado para la prueba **DAM 2026** (código 3015, Costa Rica). Pensada
 
 ## Qué hace
 
-- **Sesión de 10 tarjetas** priorizando lo que ya toca repasar (algoritmo SM-2).
+- **Ruta de 17 unidades**: teoría corta y quiz de 5 preguntas por unidad. Se domina con 80%.
+- **Repaso** de 10 tarjetas priorizando lo que ya toca (algoritmo SM-2).
 - **Feedback inmediato** con explicación de cada respuesta.
 - **Progreso**: racha de días, precisión, mapa de 30 días y cobertura por materia.
 - **Banco de preguntas** con búsqueda y filtro por materia.
@@ -15,22 +16,23 @@ Repaso espaciado para la prueba **DAM 2026** (código 3015, Costa Rica). Pensada
 
 ## Contenido
 
-50 preguntas distribuidas según la tabla de especificaciones oficial de DAM 2026:
+85 preguntas distribuidas según la tabla de especificaciones oficial de DAM 2026:
 
 | Materia | Ítems |
 |---|---|
-| Lógica y algoritmos | 8 |
-| Hardware móvil | 6 |
-| UI y patrones | 6 |
+| Lógica y algoritmos | 10 |
+| Hardware móvil | 10 |
+| UI y patrones | 10 |
 | Firebase | 5 |
 | Ciberseguridad | 5 |
-| Entorno web | 3 |
-| Bases de datos | 3 |
-| Emprendimiento | 3 |
-| Servicio al cliente | 3 |
-| Eficiencia energética | 3 |
-| Phishing | 3 |
-| Ciudadano digital | 2 |
+| Entorno web | 5 |
+| Bases de datos | 5 |
+| Emprendimiento | 5 |
+| Servicio al cliente | 5 |
+| Eficiencia energética | 5 |
+| Phishing | 5 |
+| Ciudadano digital | 5 |
+| IA y agentes | 10 |
 
 ## Stack
 
@@ -60,8 +62,9 @@ Firebase Hosting sirve `dist/` con rewrite a `index.html` para las rutas del SPA
 src/
 ├── app/Layout.tsx        # shell + tab bar inferior
 ├── features/
-│   ├── hoy/              # pantalla de inicio y cola del día
-│   ├── sesion/           # motor de repaso
+│   ├── ruta/             # mapa de unidades y progreso
+│   ├── leccion/          # teoría por unidad
+│   ├── sesion/           # quiz de unidad y repaso SM-2
 │   ├── progreso/         # racha, estadísticas, heatmap
 │   ├── banco/            # explorador de preguntas
 │   └── ajustes/          # tema, exportar, reiniciar
@@ -69,13 +72,15 @@ src/
 │   ├── sm2.ts            # algoritmo de repaso espaciado
 │   ├── db.ts             # Dexie + cálculo de racha
 │   └── store.ts          # estado global (Zustand)
-└── data/preguntas.ts     # contenido
+├── data/unidades.ts      # 17 unidades con su lección
+└── data/preguntas.ts     # 85 preguntas
 ```
 
 ## Roadmap
 
 - [ ] Backend propio (Node + PostgreSQL) con cuentas y sincronización entre dispositivos
 - [ ] Editor de preguntas
+- [x] Teoría por unidad antes del quiz
 - [ ] Simulacro cronometrado de 34 ítems
 - [ ] Estadísticas por tema, no solo por materia
 

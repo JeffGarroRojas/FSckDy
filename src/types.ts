@@ -12,6 +12,30 @@ export interface Pregunta {
   dificultad: Dificultad;
 }
 
+export type Bloque =
+  | { t: "p"; texto: string }
+  | { t: "lista"; titulo?: string; items: string[] }
+  | { t: "clave"; texto: string }
+  | { t: "ejemplo"; titulo?: string; texto: string };
+
+export interface Unidad {
+  id: string;
+  materia: string;
+  materiaNombre: string;
+  titulo: string;
+  orden: number;
+  leccion: Bloque[];
+  preguntas: string[];
+}
+
+export interface ProgresoUnidad {
+  id: string;
+  leida: boolean;
+  mejor: number;
+  dominada: boolean;
+  ts: number;
+}
+
 export interface Tarjeta {
   preguntaId: string;
   ease: number;
